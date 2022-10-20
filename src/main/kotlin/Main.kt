@@ -2,7 +2,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 fun main(args: Array<String>) {
-    var cojondemono = mutableListOf(Articulo(4, 40), Articulo(6, 30), Articulo(4, 50), Articulo(5, 10))
+    var cojondemono = mutableListOf(Articulo(4, 40), Articulo(6, 30), Articulo(4, 50), Articulo(5, 10), Articulo(7, 8))
     cojondemono.sort()
     println(cojondemono)
     var mochilaJ = Mochila(cojondemono)
@@ -19,36 +19,34 @@ class Persona(var nombre: String, var mochila: Mochila, var perfil: String) {
 
 class Mochila(var lista: MutableList<Articulo>) {
     var W = 10
+    var dMochila = mutableListOf<Articulo>()
     fun dentroM() {
-        println(lista)
         val result = mutableListOf<Articulo>()
         var suma = 0
-        while (suma < W) {
-            val el = lista.removeLastOrNull()
-            if (el == null || suma + el.peso > W) break
-            result.add(el)
-            suma += el.peso
+        var er = 0
+        while (suma <= W) {
+            suma += result[er].peso
+            if (suma > W) break
+            result.add(lista[lista.size - 1])
+            lista.removeLastOrNull()
+            er + 1
         }
-        //aaaaa por eso cuando me he hecho el auxiliar se me borraba a la vez
-        //gracias :D Nada
-        //lista = result
-        print(lista)
-
-        /*var sum = 0
-        var aux = 0
-
-        //okele
-        repeat(lista.size) { g ->
-            if (W < sum) {
-                sum += lista[g].peso
-                aux += 1
-            } else if (sum <= W) lista.removeLast() // Si pero esto siempre va a ser true, te lo esta diciendo IntelliJ
-        }*/
+        dMochila = lista
+        lista = result
         println(lista)
     }
+    /*
+
+            while (suma < W) {
+                val el = lista.removeLastOrNull()!!
+                result.add(el)
+                if (el == null || suma + el.peso > W) break
+                suma += el.peso
+            }
+     */
 
     override fun toString(): String {
-        return "Mochila(lista=$lista, W=$W)"
+        return "Mochila(lista=$dMochila)"
     }
 }
 
